@@ -1,33 +1,39 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ChatbotScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Assistant intelligent</Text>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Assistant intelligent</Text>
 
-      <View style={styles.chatArea}>
-        <Text style={styles.placeholder}>
-          💬 Les messages apparaîtront ici
-        </Text>
-      </View>
+        <View style={styles.chatArea}>
+          <Text style={styles.placeholder}>
+            💬 Les messages apparaîtront ici
+          </Text>
+        </View>
 
-      <View style={styles.inputBar}>
-        <TextInput
-          placeholder="Posez votre question..."
-          style={styles.input}
-        />
-        <TouchableOpacity style={styles.sendButton}>
-          <Text style={styles.sendText}>Envoyer</Text>
-        </TouchableOpacity>
+        <View style={styles.inputBar}>
+          <TextInput
+            placeholder="Posez votre question..."
+            style={styles.input}
+          />
+          <TouchableOpacity style={styles.sendButton}>
+            <Text style={styles.sendText}>Envoyer</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safe: {
     flex: 1,
     backgroundColor: '#F9FAFB',
+  },
+  container: {
+    flex: 1,
     padding: 16,
   },
   title: {

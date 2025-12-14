@@ -1,27 +1,35 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profil</Text>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Profil</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.name}>Kaoutar Zat</Text>
-        <Text style={styles.role}>Étudiante – Génie Informatique</Text>
+        <View style={styles.card}>
+          <Text style={styles.name}>Kaoutar Zat</Text>
+          <Text style={styles.role}>
+            Étudiante – Génie Informatique
+          </Text>
+        </View>
+
+        <TouchableOpacity style={styles.logout}>
+          <Text style={styles.logoutText}>Se déconnecter</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.logout}>
-        <Text style={styles.logoutText}>Se déconnecter</Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+  },
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#F9FAFB',
   },
   title: {
     fontSize: 26,

@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MOCK_TIMETABLE = [
   {
@@ -37,25 +38,30 @@ function TimetableCard({ item }: any) {
 
 export default function TimetableScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Emploi du temps</Text>
-      <Text style={styles.subtitle}>Aujourd’hui</Text>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Emploi du temps</Text>
+        <Text style={styles.subtitle}>Aujourd’hui</Text>
 
-      <FlatList
-        data={MOCK_TIMETABLE}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <TimetableCard item={item} />}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+        <FlatList
+          data={MOCK_TIMETABLE}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <TimetableCard item={item} />}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+  },
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#F9FAFB',
   },
   title: {
     fontSize: 26,
