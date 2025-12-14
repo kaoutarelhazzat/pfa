@@ -1,9 +1,73 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Accueil – Assistant Scolarité</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Assistant Scolarité</Text>
+      <Text style={styles.subtitle}>
+        Bienvenue sur votre espace étudiant
+      </Text>
+
+      <View style={styles.cards}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Emploi du temps</Text>
+          <Text style={styles.cardText}>
+            Consultez votre planning
+          </Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Documents</Text>
+          <Text style={styles.cardText}>
+            Attestations & procédures
+          </Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Assistant</Text>
+          <Text style={styles.cardText}>
+            Poser une question
+          </Text>
+        </View>
+      </View>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: '#F9FAFB',
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 24,
+  },
+  cards: {
+    gap: 16,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  cardText: {
+    fontSize: 13,
+    color: '#6B7280',
+    marginTop: 4,
+  },
+});
