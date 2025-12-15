@@ -1,25 +1,71 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
 export default function ChatbotScreen() {
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Assistant intelligent</Text>
-
-        <View style={styles.chatArea}>
-          <Text style={styles.placeholder}>
-            💬 Les messages apparaîtront ici
+      <View
+        style={[
+          styles.container,
+          {
+            paddingBottom: insets.bottom + 90,
+          },
+        ]}
+      >
+        <View>
+          <Text style={styles.screenTitle}>Assistant</Text>
+          <Text style={styles.subtitle}>
+            Bienvenue sur votre espace assistant
           </Text>
         </View>
 
-        <View style={styles.inputBar}>
-          <TextInput
-            placeholder="Posez votre question..."
-            style={styles.input}
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../../assets/images/assistant.png')}
+            style={styles.image}
+            resizeMode="contain"
           />
-          <TouchableOpacity style={styles.sendButton}>
-            <Text style={styles.sendText}>Envoyer</Text>
+        </View>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>
+            Chat without limits, anytime
+          </Text>
+
+          <Text style={styles.description}>
+            Whether you need quick answers, creative ideas,
+            or just a smart conversation, your assistant is
+            here to help you instantly.
+          </Text>
+        </View>
+
+        {/* ACTION BUTTONS */}
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            style={styles.skipButton}
+            onPress={() => router.push('/')}
+          >
+            <Text style={styles.skipText}>Skip</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.nextButton}
+            onPress={() => router.push('/chat')}
+          >
+            <Text style={styles.nextText}>Next</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -27,51 +73,85 @@ export default function ChatbotScreen() {
   );
 }
 
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: '#F9FAFB',
   },
+
   container: {
     flex: 1,
-    padding: 16,
+    padding: 24,
+    justifyContent: 'space-between',
   },
-  title: {
-    fontSize: 22,
+
+  /* PAGE TITLE */
+  screenTitle: {
+    fontSize: 26,
     fontWeight: '700',
-    marginBottom: 12,
   },
-  chatArea: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    justifyContent: 'center',
+  subtitle: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginTop: 4,     
+    marginBottom: 12 
+  },
+
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  image: {
+    width: 260,
+    height: 320,
+  },
+
+  /* TEXT CONTENT */
+  textContainer: {
+    marginTop: 20,
     alignItems: 'center',
   },
-  placeholder: {
-    color: '#9CA3AF',
-    fontSize: 14,
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 12,
   },
-  inputBar: {
+  description: {
+    fontSize: 15,
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+
+  buttons: {
     flexDirection: 'row',
-    marginTop: 12,
-    gap: 8,
+    gap: 12,
   },
-  input: {
+  skipButton: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingHorizontal: 12,
+    backgroundColor: '#F3F4F6',
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: 'center',
   },
-  sendButton: {
-    backgroundColor: '#2563EB',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
+  skipText: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#111827',
   },
-  sendText: {
-    color: '#FFFFFF',
+
+  nextButton: {
+    flex: 1,
+    backgroundColor: '#4F46E5',
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: 'center',
+  },
+  nextText: {
+    fontSize: 15,
     fontWeight: '600',
+    color: '#FFFFFF',
   },
 });

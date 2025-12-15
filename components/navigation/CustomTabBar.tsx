@@ -39,7 +39,7 @@ export default function CustomTabBar({
         if (route.name === 'timetable') iconName = 'calendar';
         if (route.name === 'chatbot') iconName = 'chatbubbles';
         if (route.name === 'documents') iconName = 'document-text';
-        if (route.name === 'profile') iconName = 'person';
+        if (route.name === 'settings') iconName = 'settings';
 
         const isCenter = route.name === 'chatbot';
 
