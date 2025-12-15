@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const router = useRouter();
 
   return (
@@ -27,9 +27,15 @@ export default function LoginScreen() {
             resizeMode="contain"
           />
 
-          <Text style={styles.title}>Login</Text>
+          <Text style={styles.title}>Sign Up</Text>
 
           {/* INPUTS */}
+          <TextInput
+            placeholder="Name"
+            placeholderTextColor="#9CA3AF"
+            style={styles.input}
+          />
+
           <TextInput
             placeholder="Email"
             placeholderTextColor="#9CA3AF"
@@ -46,17 +52,17 @@ export default function LoginScreen() {
           {/* BUTTON */}
           <TouchableOpacity
             style={styles.primaryButton}
-            onPress={() => router.replace('/(tabs)')}
+            onPress={() => router.replace('/(auth)/login')}
           >
-            <Text style={styles.primaryText}>Login</Text>
+            <Text style={styles.primaryText}>Sign Up</Text>
           </TouchableOpacity>
 
           {/* FOOTER */}
           <TouchableOpacity
-            onPress={() => router.push('/(auth)/register')}
+            onPress={() => router.replace('/(auth)/login')}
           >
             <Text style={styles.link}>
-              Don’t have an account? Sign Up
+              Already have an account? Login
             </Text>
           </TouchableOpacity>
         </View>

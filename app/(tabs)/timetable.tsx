@@ -1,96 +1,199 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const MOCK_TIMETABLE = [
-  {
-    id: '1',
-    module: 'Algorithmique',
-    time: '08:30 - 10:00',
-    room: 'Salle B12',
-    teacher: 'M. El Amrani',
-  },
-  {
-    id: '2',
-    module: 'Bases de données',
-    time: '10:15 - 11:45',
-    room: 'Salle C04',
-    teacher: 'Mme Zahraoui',
-  },
-  {
-    id: '3',
-    module: 'Génie logiciel',
-    time: '14:00 - 15:30',
-    room: 'Salle A21',
-    teacher: 'M. Benali',
-  },
-];
+/* =======================
+   TYPES
+======================= */
 
-function TimetableCard({ item }: any) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.module}>{item.module}</Text>
-      <Text style={styles.info}>{item.time}</Text>
-      <Text style={styles.info}>{item.room}</Text>
-      <Text style={styles.teacher}>{item.teacher}</Text>
-    </View>
-  );
-}
+type Day = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri';
+
+type Course = {
+  time: string;
+  title: string;
+  room: string;
+  color: string;
+};
+
+type TimetableData = Record<Day, Course[]>;
+
+/* =======================
+   DATA
+======================= */
+
+const DAYS: Day[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
+const HOURS = ['08:00', '10:00', '12:00', '14:00', '16:00'];
+
+const COURSES: TimetableData = {
+  Mon: [
+    { time: '08:00', title: 'Math', room: 'A1', color: '#22C55E' },
+    { time: '12:00', title: 'Physics', room: 'B2', color: '#F59E0B' },
+  ],
+  Tue: [
+    { time: '10:00', title: 'CS', room: 'Lab 3', color: '#6366F1' },
+  ],
+  Wed: [
+    { time: '14:00', title: 'AI', room: 'C4', color: '#EC4899' },
+  ],
+  Thu: [],
+  Fri: [
+    { time: '08:00', title: 'Networks', room: 'D1', color: '#06B6D4' },
+  ],
+};
+
+/* =======================
+   SCREEN
+======================= */
 
 export default function TimetableScreen() {
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Emploi du temps</Text>
-        <Text style={styles.subtitle}>Aujourd’hui</Text>
-
-        <FlatList
-          data={MOCK_TIMETABLE}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <TimetableCard item={item} />}
-          showsVerticalScrollIndicator={false}
-        />
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Courses</Text>
       </View>
+
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View style={styles.table}>
+          {/* HOURS COLUMN */}
+          <View style={styles.hoursColumn}>
+            <View style={styles.dayHeaderSpacer} />
+            {HOURS.map(hour => (
+              <Text key={hour} style={styles.hourText}>
+                {hour}
+              </Text>
+            ))}
+          </View>
+
+          {/* DAYS COLUMNS */}
+          {DAYS.map(day => (
+            <View key={day} style={styles.dayColumn}>
+              <Text style={styles.dayTitle}>{day}</Text>
+
+              {HOURS.map(hour => {
+                const course = COURSES[day].find(
+                  (c: Course) => c.time === hour
+                );
+
+                return course ? (
+                  <View key={hour} style={styles.courseCard}>
+                    <View
+                      style={[
+                        styles.colorBar,
+                        { backgroundColor: course.color },
+                      ]}
+                    />
+                    <View style={styles.courseContent}>
+                      <Text style={styles.courseTitle}>
+                        {course.title}
+                      </Text>
+                      <Text style={styles.courseRoom}>
+                        {course.room}
+                      </Text>
+                      <Text style={styles.courseTime}>
+                        {course.time}
+                      </Text>
+                    </View>
+                  </View>
+                ) : (
+                  <View key={hour} style={styles.emptySlot} />
+                );
+              })}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
+/* =======================
+   STYLES
+======================= */
+
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: '#0F766E',
   },
-  container: {
-    flex: 1,
-    padding: 24,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 20,
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+
+  header: {
     padding: 16,
-    marginBottom: 16,
-    elevation: 3,
   },
-  module: {
-    fontSize: 16,
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+
+  table: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    paddingBottom: 24,
+  },
+
+  hoursColumn: {
+    width: 60,
+    alignItems: 'center',
+  },
+  dayHeaderSpacer: {
+    height: 32,
+  },
+  hourText: {
+    height: 90,
+    color: '#E5E7EB',
+    fontSize: 12,
+  },
+
+  dayColumn: {
+    width: 140,
+    marginLeft: 10,
+  },
+  dayTitle: {
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
-  info: {
-    fontSize: 13,
-    color: '#374151',
-    marginTop: 2,
+
+  courseCard: {
+    height: 80,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    marginBottom: 10,
+    flexDirection: 'row',
+    overflow: 'hidden',
   },
-  teacher: {
-    fontSize: 12,
+  colorBar: {
+    width: 6,
+  },
+  courseContent: {
+    padding: 10,
+    flex: 1,
+  },
+  courseTitle: {
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  courseRoom: {
+    fontSize: 11,
     color: '#6B7280',
-    marginTop: 6,
+  },
+  courseTime: {
+    fontSize: 11,
+    color: '#9CA3AF',
+  },
+
+  emptySlot: {
+    height: 80,
+    marginBottom: 10,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.15)',
   },
 });
